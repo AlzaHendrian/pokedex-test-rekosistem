@@ -1,5 +1,8 @@
 import React from 'react';
-import { View, Animated, StyleSheet } from 'react-native';
+import { View, Animated, StyleSheet, Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
+const CARD_WIDTH = (width - 48) / 2; // Sama dengan PokemonCard
 
 export const SkeletonCard: React.FC = () => {
   const opacity = React.useRef(new Animated.Value(0.3)).current;
@@ -25,7 +28,7 @@ export const SkeletonCard: React.FC = () => {
   }, [opacity]);
 
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, { width: CARD_WIDTH }]}>
       <Animated.View style={[styles.skeletonImage, { opacity }]} />
       <Animated.View style={[styles.skeletonText, { opacity, marginTop: 12 }]} />
       <Animated.View style={[styles.skeletonTextSmall, { opacity, marginTop: 8 }]} />
@@ -35,7 +38,6 @@ export const SkeletonCard: React.FC = () => {
 
 const styles = StyleSheet.create({
   card: {
-    width: 160,
     backgroundColor: '#ffffff',
     borderRadius: 20,
     padding: 16,
@@ -44,6 +46,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 5,
+    alignItems: 'center', // Center content
   },
   skeletonImage: {
     width: 80,
@@ -51,20 +54,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#e2e8f0',
     borderRadius: 40,
     marginBottom: 12,
-    alignSelf: 'center',
   },
   skeletonText: {
     width: '80%',
     height: 16,
     backgroundColor: '#e2e8f0',
     borderRadius: 8,
-    alignSelf: 'center',
   },
   skeletonTextSmall: {
     width: '40%',
     height: 12,
     backgroundColor: '#e2e8f0',
     borderRadius: 6,
-    alignSelf: 'center',
   },
 });
